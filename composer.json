@@ -1,0 +1,37 @@
+{
+    "name": "quasar/oauth",
+    "description": "Quasar OAuth package",
+    "keywords": [
+        "syscover",
+        "pulsar",
+        "quasar",
+        "laravel",
+        "intranet",
+        "OAuth",
+        "nimbl"
+    ],
+    "authors": [
+        {
+            "name": "Jose Carlos Rodríguez Palacín",
+            "email": "carlos.rodriguez@techedgegroup.com"
+        }
+    ],
+    "require": {
+        "php": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Quasar\\OAuth\\": "src/Quasar/OAuth"
+        },
+        "classmap": [
+            "src/Quasar/OAuth"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Quasar\\OAuth\\OAuthServiceProvider"
+            ]
+        }
+    }
+}
