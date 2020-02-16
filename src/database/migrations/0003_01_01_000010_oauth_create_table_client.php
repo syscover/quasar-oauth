@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AdminCreateTableLang extends Migration
+class OauthCreateTableClient extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -12,20 +12,19 @@ class AdminCreateTableLang extends Migration
 	 */
 	public function up()
 	{
-		if(! Schema::hasTable('oauth_refresh_token'))
+		if(! Schema::hasTable('oauth_client'))
 		{
-			Schema::create('oauth_refresh_token', function (Blueprint $table) {
+			Schema::create('oauth_client', function (Blueprint $table) {
 				$table->engine = 'InnoDB';
 
                 $table->increments('id');
                 $table->uuid('uuid');
-                $table->uuid('access_token_uuid');
-                $table->text('token');
+                $table->uuid('type_uuid');
+                $table->string('name');
+                $table->string('secret', 100);
+                $table->text('redirect');
                 $table->boolean('is_revoked');
-                $table->userUuid('uuid');
-                $table->userType('uuid');
                 $table->timestamps();
-                $table->dateTime('expires_at')->nullable();
 			});
 		}
 	}
@@ -37,6 +36,6 @@ class AdminCreateTableLang extends Migration
 	 */
 	public function down()
 	{
-        Schema::dropIfExists('oauth_refresh_token');
+        Schema::dropIfExists('oauth_client');
 	}
 }

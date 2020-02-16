@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AdminCreateTableLang extends Migration
+class OauthCreateTableAccessToken extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -19,11 +19,12 @@ class AdminCreateTableLang extends Migration
 
                 $table->increments('id');
                 $table->uuid('uuid');
+                $table->uuid('client_uuid');
                 $table->text('token');
-                $table->string('name')->nullable();
                 $table->boolean('is_revoked');
-                $table->uuid('user_uuid');
-                $table->string('user_type');
+                $table->string('name')->nullable();
+                $table->uuid('user_uuid')->nullable();
+                $table->string('user_type')->nullable();
                 $table->dateTime('expires_at')->nullable();
                 $table->timestamps();
 			});
