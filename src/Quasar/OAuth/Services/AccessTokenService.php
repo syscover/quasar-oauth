@@ -16,7 +16,7 @@ class AccessTokenService extends CoreService
             'name'          => 'required',
             'userUuid'      => 'nullable|uuid',
             'userType'      => 'nullable',
-            'expiresAt'     => 'nullable|uuid'
+            'expiresAt'     => 'nullable|date_format:Y-m-d H:i:s'
         ]);
 
         $object = AccessToken::create($data)->fresh();
@@ -33,9 +33,11 @@ class AccessTokenService extends CoreService
         Arr::forget($data, 'userType');
 
         $this->validate($data, [
+            'id'            => 'required|integer',
+            'uuid'          => 'required|uuid',
             'isRevoked'     => 'required|boolean',
             'name'          => 'required',
-            'expiresAt'     => 'nullable|uuid'
+            'expiresAt'     => 'nullable|date_format:Y-m-d H:i:s'
         ]);
 
         $object = AccessToken::where('uuid', $uuid)->first();
@@ -47,5 +49,19 @@ class AccessTokenService extends CoreService
         $object->save();
 
         return $object;
+    }
+
+    public static function getAccessTokenObject(string $bearerToken)
+    {
+        $accessTokenArr = (array) JWTService::decode($bearerToken);
+        $accessTokenObj = AccessToken::where('uuid', $accessTokenArr['jit'])->first();
+
+        // check token and client
+        if (!$accessTokenObj->isRevoke && !$accessTokenObj->client->isRevoke)
+        {
+            JWTService::decode($bearerToken, $accessTokenObj->client->secret);
+        }
+
+        return $accessTokenObj;
     }
 }

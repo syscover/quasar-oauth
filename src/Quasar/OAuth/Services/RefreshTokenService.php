@@ -13,9 +13,9 @@ class RefreshTokenService extends CoreService
             'accessTokenUuid'   => 'required|uuid',
             'token'             => 'required|string',
             'isRevoked'         => 'required|boolean',
-            'expiresAt'         => 'nullable|uuid'
+            'expiresAt'         => 'nullable|date_format:Y-m-d H:i:s'
         ]);
-
+        
         $object = RefreshToken::create($data)->fresh();
 
         return $object;
@@ -28,8 +28,10 @@ class RefreshTokenService extends CoreService
         Arr::forget($data, 'token');
 
         $this->validate($data, [
-            'isRevoked'         => 'required|boolean',
-            'expiresAt'         => 'nullable|uuid'
+            'id'            => 'required|integer',
+            'uuid'          => 'required|uuid',
+            'isRevoked'     => 'required|boolean',
+            'expiresAt'     => 'nullable|date_format:Y-m-d H:i:s'
         ]);
 
         $object = RefreshToken::where('uuid', $uuid)->first();

@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
+use Firebase\JWT\ExpiredException;
 use Carbon\Carbon;
 use Quasar\OAuth\Services\AccessTokenService;
 use Quasar\OAuth\Services\RefreshTokenService;
 use Quasar\OAuth\Models\Client;
+use Quasar\OAuth\Models\RefreshToken;
 
 class JWTService
 {
@@ -15,35 +17,36 @@ class JWTService
     public static function generatePersonalAccessTokens(
         string $userUuid,
         string $userType,
-        array $accessTokenPayload, 
-        array $refreshTokenPayload
+        Client $client
     )
     {
-        // get current time
-        $date = Carbon::now();
-
-        $client = Client::where('type_uuid', '974a4a29-92b3-47c3-a282-f2b9058aa273')->first();
+        // get current times
+        $accessTokenDate    = Carbon::now();
+        $refreshTokenDate   = Carbon::now();
 
         // generate access token
-        $accessTokenPayload['jit']      = Str::uuid();
+        $accessTokenPayload['jit']      = (string) Str::uuid();
         $accessTokenPayload['iss']      = 'Quasar OAuth';
-        $accessTokenPayload['iat']      = $date->format('U');
-        $accessTokenPayload['nbf']      = $date->format('U');
-        $accessTokenPayload['exp']      = $date->addSeconds(config('quasar.oauth.personal_access_token_expiration'))->format('U');
+        $accessTokenPayload['iat']      = $accessTokenDate->format('U');
+        $accessTokenPayload['nbf']      = $accessTokenDate->format('U');
+        $accessTokenPayload['exp']      = $accessTokenDate->addSeconds(config('quasar-oauth.personal_access_token_expiration'))->format('U');
         
         // generate refresh token
-        $refreshTokenPayload['jit']     = Str::uuid();
+        $refreshTokenPayload['jit']     = (string) Str::uuid();
         $refreshTokenPayload['iss']     = 'Quasar OAuth';
-        $refreshTokenPayload['iat']     = $date->format('U');
-        $refreshTokenPayload['nbf']     = $date->format('U');
-        $refreshTokenPayload['exp']     = $date->addSeconds(config('quasar.oauth.personal_refresh_token_expiration'))->format('U');
+        $refreshTokenPayload['iat']     = $refreshTokenDate->format('U');
+        $refreshTokenPayload['nbf']     = $refreshTokenDate->format('U');
+        $refreshTokenPayload['exp']     = $refreshTokenDate->addSeconds(config('quasar-oauth.personal_refresh_token_expiration'))->format('U');
 
         // generate tokens
         $accessToken    = self::encode($accessTokenPayload, $client->secret);
         $refreshToken   = self::encode($refreshTokenPayload, $client->secret);
 
+        $accessTokenService = new AccessTokenService();
+        $refreshTokenService = new RefreshTokenService();
+
         // register tokens
-        AccessTokenService::create([
+        $accessTokenService->create([
             'uuid'          => $accessTokenPayload['jit'],
             'clientUuid'    => $client->uuid,
             'token'         => $accessToken,
@@ -51,15 +54,15 @@ class JWTService
             'name'          => $client->name,
             'userUuid'      => $userUuid,
             'userType'      => $userType,
-            'expiresAt'     => $date->toDateTimeString()
+            'expiresAt'     => $accessTokenDate->toDateTimeString()
         ]);
 
-        RefreshTokenService::create([
+        $refreshTokenService->create([
             'uuid'              => $refreshTokenPayload['jit'],
-            'accessTokenUuid'   => $refreshTokenPayload['jit'],
+            'accessTokenUuid'   => $accessTokenPayload['jit'],
             'token'             => $refreshToken,
             'isRevoked'         => false,
-            'expires_at'        => $date->toDateTimeString()
+            'expiresAt'         => $refreshTokenDate->toDateTimeString()
         ]);
 
         return [
@@ -68,13 +71,47 @@ class JWTService
         ];
     }
 
-    public static function encode(array $payload, string $secret)
+    /**
+     * Generate access token from refresh token
+     */
+    public static function generatePersonalAccessTokensWithRefreshToken(
+        string $refreshToken, 
+        string $grantType
+    )
     {
-        return JWT::encode($encode, $secret, 'HS256');
+        // get refresh token without sign
+        $refreshTokenArr = (array) self::decode($refreshToken);
+
+        // get refresh token from uuid
+        $refreshTokenObj = RefreshToken::where('uuid', $refreshTokenArr['jit'])->first();
+
+        // get access token
+        $accessToken = $refreshTokenObj->accessToken;
+
+        // decode refresh token with sign
+        self::decode($refreshToken, $accessToken->client->secret);
+        
+        // delete old access token and refresh token by foreign key
+        $accessToken->delete();
+
+        return self::generatePersonalAccessTokens(
+            $accessToken->userUuid, 
+            $accessToken->userType,
+            $accessToken->client
+        );
     }
 
-    public static function decode(string $jwt, string $secret)
+    public static function encode(array $payload, string $secret)
     {
-        return JWT::decode($jwt, $secret, ['HS256']);
+        return JWT::encode($payload, $secret, 'HS256');
+    }
+
+    public static function decode(string $jwt, string $secret = null)
+    {
+        if ($secret) return JWT::decode($jwt, $secret, ['HS256']);
+
+        list($header, $payload, $signature) = explode ('.', $jwt);
+        
+        return json_decode(base64_decode($payload));
     }
 }

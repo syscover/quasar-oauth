@@ -1,0 +1,5 @@
+type OAuthCredentials
+{
+    accessToken: String!
+    refreshToken: String!
+}

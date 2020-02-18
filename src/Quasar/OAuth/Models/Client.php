@@ -10,5 +10,5 @@ use Quasar\Core\Models\CoreModel;
 class Client extends CoreModel
 {
     protected $table        = 'oauth_client';
-    protected $fillable     = ['uuid', 'type_uuid', 'name', 'secret', 'redirect', 'is_revoked'];
+    protected $fillable     = ['uuid', 'applicationUuid', 'typeUuid', 'name', 'secret', 'redirect', 'isRevoked', 'isMaster'];
 }

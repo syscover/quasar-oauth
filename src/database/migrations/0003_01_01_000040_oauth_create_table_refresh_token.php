@@ -12,7 +12,7 @@ class OauthCreateTableRefreshToken extends Migration
 	 */
 	public function up()
 	{
-		if(! Schema::hasTable('oauth_refresh_token'))
+		if (!Schema::hasTable('oauth_refresh_token'))
 		{
 			Schema::create('oauth_refresh_token', function (Blueprint $table) {
 				$table->engine = 'InnoDB';
@@ -24,6 +24,13 @@ class OauthCreateTableRefreshToken extends Migration
                 $table->boolean('is_revoked');
                 $table->dateTime('expires_at')->nullable();
                 $table->timestamps();
+
+                $table->index('uuid', 'oauth_refresh_token_uuid_idx');
+                $table->foreign('access_token_uuid', 'oauth_refresh_token_access_token_uuid_fk')
+                    ->references('uuid')
+                    ->on('oauth_access_token')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
 			});
 		}
 	}

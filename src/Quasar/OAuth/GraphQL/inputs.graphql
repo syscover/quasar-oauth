@@ -1,0 +1,12 @@
+input OAuthCredentialsInput
+{
+    username: String!
+    password: String!
+    grantType: GrantType!
+}
+
+input OAuthRefreshCredentialsInput
+{
+    refreshToken: String!
+    grantType: GrantType!
+}

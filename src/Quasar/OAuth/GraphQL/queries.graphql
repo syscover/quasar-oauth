@@ -1,0 +1,3 @@
+# Authorization
+oAuthMe: JSON @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@me")
+oAuthMePermissions: [JSON] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@permissions")

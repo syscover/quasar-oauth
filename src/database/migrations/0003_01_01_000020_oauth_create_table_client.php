@@ -12,19 +12,29 @@ class OauthCreateTableClient extends Migration
 	 */
 	public function up()
 	{
-		if(! Schema::hasTable('oauth_client'))
+		if (!Schema::hasTable('oauth_client'))
 		{
 			Schema::create('oauth_client', function (Blueprint $table) {
 				$table->engine = 'InnoDB';
 
                 $table->increments('id');
                 $table->uuid('uuid');
+                $table->uuid('application_uuid');
                 $table->uuid('type_uuid');
                 $table->string('name');
                 $table->string('secret', 100);
                 $table->text('redirect');
                 $table->boolean('is_revoked');
+                $table->boolean('is_master');
                 $table->timestamps();
+
+                $table->index('uuid', 'oauth_client_uuid_idx');
+                $table->index('type_uuid', 'oauth_client_type_uuid_idx');
+                $table->foreign('application_uuid', 'oauth_client_application_uuid_fk')
+                    ->references('uuid')
+                    ->on('oauth_application')
+                    ->onDelete('restrict')
+                    ->onUpdate('cascade');
 			});
 		}
 	}

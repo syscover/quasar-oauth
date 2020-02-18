@@ -12,7 +12,7 @@ class OauthCreateTableAccessToken extends Migration
 	 */
 	public function up()
 	{
-		if(! Schema::hasTable('oauth_access_token'))
+		if (!Schema::hasTable('oauth_access_token'))
 		{
 			Schema::create('oauth_access_token', function (Blueprint $table) {
 				$table->engine = 'InnoDB';
@@ -27,6 +27,13 @@ class OauthCreateTableAccessToken extends Migration
                 $table->string('user_type')->nullable();
                 $table->dateTime('expires_at')->nullable();
                 $table->timestamps();
+
+                $table->index('uuid', 'oauth_access_token_uuid_idx');
+                $table->foreign('client_uuid', 'oauth_access_token_client_uuid_fk')
+                    ->references('uuid')
+                    ->on('oauth_client')
+                    ->onDelete('restrict')
+                    ->onUpdate('cascade');
 			});
 		}
 	}

@@ -10,5 +10,16 @@ use Quasar\Core\Models\CoreModel;
 class AccessToken extends CoreModel
 {
     protected $table        = 'oauth_access_token';
-    protected $fillable     = ['uuid', 'token', 'name', 'is_revoked', 'user_uuid', 'user_type', 'expires_at'];
+    protected $fillable     = ['uuid', 'clientUuid', 'token', 'name', 'isRevoked', 'userUuid', 'userType', 'expiresAt'];
+    public $with            = ['client', 'user'];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_uuid', 'uuid');
+    }
+
+    public function user()
+    {
+        return $this->morphTo('user', 'user_type', 'user_uuid', 'uuid');
+    }
 }

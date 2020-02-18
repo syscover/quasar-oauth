@@ -29,6 +29,7 @@ php artisan db:seed --class="OAuthSeeder"
 **4 - Add graphQL routes to graphql/schema.graphql file**
 ```
 # OAuth
+#import ./../vendor/quasar/oauth/src/Quasar/OAuth/GraphQL/enums.graphql
 #import ./../vendor/quasar/oauth/src/Quasar/OAuth/GraphQL/inputs.graphql
 #import ./../vendor/quasar/oauth/src/Quasar/OAuth/GraphQL/types.graphql
 

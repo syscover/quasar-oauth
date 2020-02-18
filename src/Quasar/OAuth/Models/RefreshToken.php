@@ -10,5 +10,11 @@ use Quasar\Core\Models\CoreModel;
 class RefreshToken extends CoreModel
 {
     protected $table        = 'oauth_refresh_token';
-    protected $fillable     = ['uuid', 'access_token_uuid', 'token', 'is_revoked', 'expires_at'];
+    protected $fillable     = ['uuid', 'accessTokenUuid', 'token', 'isRevoked', 'expiresAt'];
+    public $with            = ['accessToken'];
+
+    public function accessToken()
+    {
+        return $this->belongsTo(AccessToken::class, 'access_token_uuid', 'uuid');
+    }
 }
