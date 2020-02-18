@@ -9,6 +9,8 @@ Quasar is a application that generates a control panel where you can create cust
 
 ## Installation
 
+Execute this steps with stand alone installation
+
 **1 - After install Laravel framework, execute on console:**
 ```
 composer require quasar/oauth
