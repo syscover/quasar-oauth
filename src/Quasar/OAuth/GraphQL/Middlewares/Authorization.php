@@ -26,6 +26,8 @@ class Authorization
             preg_replace( "/\s+|\r|\n/", "", $request['query']) !== $this->mutationOAuthRefreshCredentials
         )
         {
+            if (!$request->bearerToken()) throw new JWTRejectedException();
+
             $token          = (array) JWTService::decode($request->bearerToken());
             $accessToken    = AccessToken::where('uuid', $token['jit'])->first();
 
