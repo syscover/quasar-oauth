@@ -10,6 +10,7 @@ class OAuthSeeder extends Seeder
         Model::unguard();
 
         $this->call(OAuthPackageSeeder::class);
+        $this->call(OAuthPermissionSeeder::class);
         $this->call(OAuthApplicationSeeder::class);
         $this->call(OAuthClientSeeder::class);
         
