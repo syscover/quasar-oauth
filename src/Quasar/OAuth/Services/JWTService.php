@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
-use Firebase\JWT\ExpiredException;
 use Carbon\Carbon;
 use Quasar\OAuth\Services\AccessTokenService;
 use Quasar\OAuth\Services\RefreshTokenService;

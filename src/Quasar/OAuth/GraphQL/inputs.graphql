@@ -1,11 +1,37 @@
+input OAuthAccessTokenInput
+{
+    id: Int
+    uuid: ID
+    clientUuid: ID!
+    token: String!
+    name: String
+    userType: String
+    userUuid: ID
+    isRevoked: Boolean!
+    expiresAt: DateTime
+}
+
 input OAuthApplicationInput
 {
     id: Int
     uuid: ID
     code: String!
-    secret: String!
+    secret: String
     name: String!
     model: String!
+}
+
+input OAuthClientInput
+{
+    id: Int
+    uuid: ID
+    applicationUuid: ID!
+    typeUuid: ID!
+    name: String!
+    secret: String
+    redirect: String!
+    isRevoked: Boolean!
+    isMaster: Boolean
 }
 
 input OAuthCredentialsInput

@@ -1,3 +1,13 @@
+# Application
+oAuthApplication(query:[QueryStatementInput]): OAuthApplication @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@find")
+oAuthApplications(query:[QueryStatementInput]): [OAuthApplication!]! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@get")
+oAuthApplicationsPagination(query:[QueryStatementInput]): Pagination! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@paginate")
+
 # Authorization
 oAuthMe: JSON @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@me")
 oAuthMePermissions: [JSON] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@permissions")
+
+# Client
+oAuthClient(query:[QueryStatementInput]): OAuthClient @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@find")
+oAuthClients(query:[QueryStatementInput]): [OAuthClient!]! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@get")
+oAuthClientsPagination(query:[QueryStatementInput]): Pagination! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@paginate")

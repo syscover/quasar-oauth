@@ -10,7 +10,7 @@ class ApplicationService extends CoreService
     public function create(array $data)
     {
         $this->validate($data, [
-            'uuid'          => 'required|uuid',
+            'uuid'          => 'nullable|uuid',
             'code'          => 'required|string|unique:oauth_application,code',
             'secret'        => 'required',
             'name'          => 'required',
@@ -31,7 +31,7 @@ class ApplicationService extends CoreService
             'id'            => 'required|integer',
             'uuid'          => 'required|uuid',
             'code'          => 'required|string|unique:oauth_application,code,' . $uuid . ',uuid',
-            'secret'        => 'required',
+            'secret'        => 'nullable',
             'name'          => 'required',
             'model'         => 'required|string'
         ]);

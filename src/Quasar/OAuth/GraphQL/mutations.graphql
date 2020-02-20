@@ -1,3 +1,13 @@
+# Application
+oAuthCreateApplication(payload:OAuthApplicationInput!): OAuthApplication @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@create")
+oAuthUpdateApplication(payload:OAuthApplicationInput!): OAuthApplication @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@update")
+oAuthDeleteApplication(uuid:ID!): [OAuthApplication] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@delete")
+
+# Client
+oAuthCreateClient(payload:OAuthClientInput!): OAuthClient @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@create")
+oAuthUpdateClient(payload:OAuthClientInput!): OAuthClient @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@update")
+oAuthDeleteClient(uuid:ID!): [OAuthClient] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@delete")
+
 # Credentials
 oAuthCredentials(credentials: OAuthCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@credentials")
 oAuthRefreshCredentials(credentials: OAuthRefreshCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@refreshCredentials")

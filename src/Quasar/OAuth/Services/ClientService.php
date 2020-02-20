@@ -1,6 +1,7 @@
 <?php namespace Quasar\OAuth\Services;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Quasar\Core\Services\CoreService;
 use Quasar\OAuth\Models\Client;
 
@@ -19,6 +20,9 @@ class ClientService extends CoreService
             'isMaster'          => 'required|boolean'
         ]);
 
+        // set secret
+        $data['secret'] = Str::random(40);
+
         $object = Client::create($data)->fresh();
 
         return $object;
@@ -28,6 +32,7 @@ class ClientService extends CoreService
     {
         // we make sure to delete variables that we don't want to update
         Arr::forget($data, 'secret');
+        Arr::forget($data, 'isMaster');
 
         $this->validate($data, [
             'id'                => 'required|integer',
@@ -36,8 +41,7 @@ class ClientService extends CoreService
             'typeUuid'          => 'required|uuid',
             'name'              => 'required|string',
             'redirect'          => 'required|string',
-            'isRevoked'         => 'required|boolean',
-            'isMaster'          => 'required|boolean'
+            'isRevoked'         => 'required|boolean'
         ]);
 
         $object = Client::where('uuid', $uuid)->first();

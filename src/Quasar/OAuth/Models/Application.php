@@ -11,6 +11,7 @@ class Application extends CoreModel
 {
     protected $table        = 'oauth_application';
     protected $fillable     = ['uuid', 'code', 'secret', 'name', 'model'];
+    protected $hidden       = ['secret'];
     public $with            = ['clients'];
 
     public function clients()

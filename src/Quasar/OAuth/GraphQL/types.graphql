@@ -1,3 +1,18 @@
+type OAuthAccessToken
+{
+    id: Int!
+    uuid: ID!
+    clientUuid: ID!
+    token: String!
+    name: String
+    userType: String
+    userUuid: ID
+    isRevoked: Boolean!
+    expiresAt: DateTime
+    createdAt: DateTime
+    updatedAt: DateTime
+}
+
 type OAuthApplication
 {
     id: Int!
@@ -6,6 +21,23 @@ type OAuthApplication
     secret: String!
     name: String!
     model: String!
+    createdAt: DateTime
+    updatedAt: DateTime
+}
+
+type OAuthClient
+{
+    id: Int!
+    uuid: ID!
+    applicationUuid: ID!
+    typeUuid: ID!
+    name: String!
+    secret: String!
+    redirect: String!
+    isRevoked: Boolean!
+    isMaster: Boolean!
+    createdAt: DateTime
+    updatedAt: DateTime
 }
 
 type OAuthCredentials
@@ -13,3 +45,4 @@ type OAuthCredentials
     accessToken: String!
     refreshToken: String!
 }
+
