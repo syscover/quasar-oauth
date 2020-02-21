@@ -22,7 +22,6 @@ class OauthCreateTableApplication extends Migration
                 $table->string('code');
                 $table->string('secret');
                 $table->string('name');
-                $table->string('model');
                 $table->timestamps();
 
                 $table->index('uuid', 'oauth_application_uuid_idx');

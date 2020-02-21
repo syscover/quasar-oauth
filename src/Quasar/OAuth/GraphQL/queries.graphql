@@ -1,3 +1,8 @@
+# Access token
+oAuthAccessToken(query:[QueryStatementInput]): OAuthAccessToken @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\AccessTokenResolver@find")
+oAuthAccessTokens(query:[QueryStatementInput]): [OAuthAccessToken!]! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\AccessTokenResolver@get")
+oAuthAccessTokensPagination(query:[QueryStatementInput]): Pagination! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\AccessTokenResolver@paginate")
+
 # Application
 oAuthApplication(query:[QueryStatementInput]): OAuthApplication @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@find")
 oAuthApplications(query:[QueryStatementInput]): [OAuthApplication!]! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@get")

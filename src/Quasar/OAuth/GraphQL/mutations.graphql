@@ -1,3 +1,8 @@
+# Access token
+oAuthCreateAccessToken(payload:OAuthAccessTokenInput!): OAuthAccessToken @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\AccessTokenResolver@create")
+oAuthUpdateAccessToken(payload:OAuthAccessTokenInput!): OAuthAccessToken @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\AccessTokenResolver@update")
+oAuthDeleteAccessToken(uuid:ID!): [OAuthAccessToken] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\AccessTokenResolver@delete")
+
 # Application
 oAuthCreateApplication(payload:OAuthApplicationInput!): OAuthApplication @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@create")
 oAuthUpdateApplication(payload:OAuthApplicationInput!): OAuthApplication @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ApplicationResolver@update")

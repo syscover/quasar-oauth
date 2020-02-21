@@ -23,6 +23,7 @@ class OauthCreateTableClient extends Migration
                 $table->uuid('type_uuid');
                 $table->string('name');
                 $table->string('secret', 100);
+                $table->string('model')->nullable();
                 $table->text('redirect');
                 $table->boolean('is_revoked');
                 $table->boolean('is_master');

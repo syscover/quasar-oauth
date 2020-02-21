@@ -13,8 +13,7 @@ class ApplicationService extends CoreService
             'uuid'          => 'nullable|uuid',
             'code'          => 'required|string|unique:oauth_application,code',
             'secret'        => 'required',
-            'name'          => 'required',
-            'model'         => 'required|string'
+            'name'          => 'required'
         ]);
 
         // set secret
@@ -32,8 +31,7 @@ class ApplicationService extends CoreService
             'uuid'          => 'required|uuid',
             'code'          => 'required|string|unique:oauth_application,code,' . $uuid . ',uuid',
             'secret'        => 'nullable',
-            'name'          => 'required',
-            'model'         => 'required|string'
+            'name'          => 'required'
         ]);
 
         $object = Application::where('uuid', $uuid)->first();

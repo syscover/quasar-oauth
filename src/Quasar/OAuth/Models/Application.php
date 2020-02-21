@@ -10,7 +10,7 @@ use Quasar\Core\Models\CoreModel;
 class Application extends CoreModel
 {
     protected $table        = 'oauth_application';
-    protected $fillable     = ['uuid', 'code', 'secret', 'name', 'model'];
+    protected $fillable     = ['uuid', 'code', 'secret', 'name'];
     protected $hidden       = ['secret'];
     public $with            = ['clients'];
 

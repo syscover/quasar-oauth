@@ -15,6 +15,7 @@ class ClientService extends CoreService
             'typeUuid'          => 'required|uuid',
             'name'              => 'required|string',
             'secret'            => 'required|string',
+            'model'             => 'nullable|string',
             'redirect'          => 'required|string',
             'isRevoked'         => 'required|boolean',
             'isMaster'          => 'required|boolean'
@@ -40,6 +41,7 @@ class ClientService extends CoreService
             'applicationUuid'   => 'required|uuid',
             'typeUuid'          => 'required|uuid',
             'name'              => 'required|string',
+            'model'             => 'nullable|string',
             'redirect'          => 'required|string',
             'isRevoked'         => 'required|boolean'
         ]);

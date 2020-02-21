@@ -14,7 +14,8 @@ class OAuthClientSeeder extends Seeder
                 'applicationUuid'   => '8bb03dc8-c97b-4e06-b1b0-3c62e108fd80',
                 'typeUuid'          => '974a4a29-92b3-47c3-a282-f2b9058aa273', 
                 'name'              => 'Personal Access Token', 
-                'secret'            => Str::random(40), 
+                'secret'            => Str::random(40),
+                'model'             => 'Quasar\Admin\Models\User',
                 'redirect'          => config('app.url'), 
                 'isRevoked'         => false, 
                 'isMaster'          => true
