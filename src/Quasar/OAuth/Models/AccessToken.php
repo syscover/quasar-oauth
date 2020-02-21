@@ -10,7 +10,7 @@ use Quasar\Core\Models\CoreModel;
 class AccessToken extends CoreModel
 {
     protected $table        = 'oauth_access_token';
-    protected $fillable     = ['uuid', 'clientUuid', 'token', 'name', 'isRevoked', 'userUuid', 'userType', 'expiresAt'];
+    protected $fillable     = ['uuid', 'clientUuid', 'token', 'name', 'isRevoked', 'userType', 'userUuid', 'expiresAt'];
     public $with            = ['client', 'user'];
 
     public function client()
