@@ -25,8 +25,8 @@ class OauthCreateTableClient extends Migration
                 $table->string('secret', 100);
                 $table->string('model')->nullable();
                 $table->text('redirect');
-                $table->boolean('is_revoked');
-                $table->boolean('is_master');
+                $table->boolean('is_revoked')->default(false);
+                $table->boolean('is_master')->default(false);
                 $table->timestamps();
 
                 $table->index('uuid', 'oauth_client_uuid_idx');

@@ -24,7 +24,7 @@ class OauthCreateTableAccessToken extends Migration
                 $table->string('name')->nullable();
                 $table->string('user_type')->nullable();
                 $table->uuid('user_uuid')->nullable();
-                $table->boolean('is_revoked');
+                $table->boolean('is_revoked')->default(false);
                 $table->dateTime('expires_at')->nullable();
                 $table->timestamps();
 

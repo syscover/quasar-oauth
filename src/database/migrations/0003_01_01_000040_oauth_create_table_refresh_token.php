@@ -21,7 +21,7 @@ class OauthCreateTableRefreshToken extends Migration
                 $table->uuid('uuid');
                 $table->uuid('access_token_uuid');
                 $table->text('token');
-                $table->boolean('is_revoked');
+                $table->boolean('is_revoked')->default(false);
                 $table->dateTime('expires_at')->nullable();
                 $table->timestamps();
 

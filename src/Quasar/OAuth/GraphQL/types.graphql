@@ -30,6 +30,7 @@ type OAuthClient
     id: Int!
     uuid: ID!
     applicationUuid: ID!
+    application: OAuthApplication!
     typeUuid: ID!
     name: String!
     secret: String!

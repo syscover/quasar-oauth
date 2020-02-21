@@ -14,11 +14,10 @@ class ClientService extends CoreService
             'applicationUuid'   => 'required|uuid',
             'typeUuid'          => 'required|uuid',
             'name'              => 'required|string',
-            'secret'            => 'required|string',
             'model'             => 'nullable|string',
             'redirect'          => 'required|string',
             'isRevoked'         => 'required|boolean',
-            'isMaster'          => 'required|boolean'
+            'isMaster'          => 'boolean'
         ]);
 
         // set secret
