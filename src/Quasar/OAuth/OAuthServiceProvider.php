@@ -11,6 +11,9 @@ class OAuthServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+        // register routes
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/api.php');
+        
         // register migrations
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 

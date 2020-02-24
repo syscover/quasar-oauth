@@ -36,8 +36,10 @@ input OAuthClientInput
 
 input OAuthCredentialsInput
 {
-    username: String!
-    password: String!
+    username: String
+    password: String
+    clientUuid: String
+    clientSecret: String
     grantType: GrantType!
 }
 

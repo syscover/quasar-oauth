@@ -14,5 +14,5 @@ oAuthUpdateClient(payload:OAuthClientInput!): OAuthClient @field(resolver: "Quas
 oAuthDeleteClient(uuid:ID!): [OAuthClient] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@delete")
 
 # Credentials
-oAuthCredentials(credentials: OAuthCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@credentials")
-oAuthRefreshCredentials(credentials: OAuthRefreshCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\PersonalAccessTokenResolver@refreshCredentials")
+oAuthCredentials(credentials: OAuthCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\CredentialsResolver@credentials")
+oAuthRefreshCredentials(credentials: OAuthRefreshCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\CredentialsResolver@refreshCredentials")

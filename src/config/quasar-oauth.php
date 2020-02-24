@@ -3,14 +3,19 @@
 return [
 
     //******************************************************************************************************************
-    //***   Expiration time of personal access token
+    //***   Expiration time of personal access token in seconds
     //******************************************************************************************************************
     'personal_access_token_expiration' => env('OAUTH_PERSONAL_ACCESS_TOKEN_EXPIRATION', 3000),
 
     //******************************************************************************************************************
-    //***   Expiration time of personal refresh token
+    //***   Expiration time of personal refresh token in seconds
     //******************************************************************************************************************
     'personal_refresh_token_expiration' => env('OAUTH_PERSONAL_REFRESH_TOKEN_EXPIRATION', 6000),
+
+    //******************************************************************************************************************
+    //***   Expiration time of client credentials token in seconds
+    //******************************************************************************************************************
+    'client_credentials_token_expiration' => env('OAUTH_CLIENT_CREDENTIALS_TOKEN_EXPIRATION', 31536000),
 
     //******************************************************************************************************************
     //***   Types of auth clients

@@ -11,7 +11,7 @@ use Quasar\OAuth\Models\RefreshToken;
 class JWTService
 {
     /**
-     * Generate access token
+     * Generate personal access token
      */
     public static function generatePersonalAccessTokens(
         string $userUuid,
@@ -98,6 +98,44 @@ class JWTService
             $accessToken->userType,
             $accessToken->client
         );
+    }
+
+    /**
+     * Generate client credentials access token
+     */
+    public static function generateClientCredentialsAccessTokens(
+        Client $client
+    )
+    {
+        // get current times
+        $accessTokenDate    = Carbon::now();
+        $refreshTokenDate   = Carbon::now();
+
+        // generate access token
+        $accessTokenPayload['jit']      = (string) Str::uuid();
+        $accessTokenPayload['iss']      = 'Quasar OAuth';
+        $accessTokenPayload['iat']      = $accessTokenDate->format('U');
+        $accessTokenPayload['nbf']      = $accessTokenDate->format('U');
+        $accessTokenPayload['exp']      = $accessTokenDate->addSeconds(config('quasar-oauth.client_credentials_token_expiration'))->format('U');
+        
+        // generate token
+        $accessToken = self::encode($accessTokenPayload, $client->secret);
+
+        $accessTokenService = new AccessTokenService();
+
+        // register token
+        $accessTokenService->create([
+            'uuid'          => $accessTokenPayload['jit'],
+            'clientUuid'    => $client->uuid,
+            'token'         => $accessToken,
+            'isRevoked'     => false,
+            'name'          => $client->name,
+            'expiresAt'     => $accessTokenDate->toDateTimeString()
+        ]);
+
+        return [
+            'accessToken'   => $accessToken
+        ];
     }
 
     public static function encode(array $payload, string $secret)
