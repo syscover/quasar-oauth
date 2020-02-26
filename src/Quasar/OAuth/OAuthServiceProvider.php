@@ -17,6 +17,9 @@ class OAuthServiceProvider extends ServiceProvider
         // register migrations
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
+        // register views
+		$this->loadViewsFrom(__DIR__ . '/../../resources/views', 'oauth');
+
         // register seeds
         $this->publishes([
             __DIR__ . '/../../database/seeds/' => base_path('/database/seeds')

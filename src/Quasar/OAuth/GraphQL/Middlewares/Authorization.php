@@ -17,7 +17,6 @@ class Authorization
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @return \Illuminate\Http\JsonResponse
      */
     public function handle(Request $request, Closure $next)
     {
@@ -28,11 +27,11 @@ class Authorization
         {
             if (!$request->bearerToken()) throw new JWTRejectedException();
 
-            $token          = (array) JWTService::decode($request->bearerToken());
+            $token = (array) JWTService::decode($request->bearerToken());
             
             if (!isset($token['jit'])) throw new JWTRejectedException();
             
-            $accessToken    = AccessToken::where('uuid', $token['jit'])->first();
+            $accessToken = AccessToken::where('uuid', $token['jit'])->first();
 
             if (!$accessToken || !$accessToken->client || !$accessToken->client->secret) throw new JWTRejectedException();
 

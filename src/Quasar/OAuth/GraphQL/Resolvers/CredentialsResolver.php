@@ -12,6 +12,11 @@ class CredentialsResolver
 {
     public function credentials($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
+        if ($args['credentials']['grantType'] === GrantType::AUTHORIZATION_CODE)
+        {
+
+        }
+
         if ($args['credentials']['grantType'] === GrantType::CLIENT_CREDENTIALS)
         {
 
@@ -33,6 +38,6 @@ class CredentialsResolver
 
     public function refreshCredentials($root, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        return JWTService::generatePersonalAccessTokensWithRefreshToken($args['credentials']['refreshToken'], $args['credentials']['grantType']);
+        return JWTService::refreshPersonalAccessTokens($args['credentials']['refreshToken'], $args['credentials']['grantType']);
     }
 }

@@ -2,9 +2,9 @@
 
 class GrantType
 {
-    const AUTHORIZATION_CODE = 'AUTHORIZATION_CODE';
-    const CLIENT_CREDENTIALS = 'CLIENT_CREDENTIALS';
-    const IMPLICIT = 'IMPLICIT';
-    const PASSWORD = 'PASSWORD';
-    const REFRESH_TOKEN = 'REFRESH_TOKEN';
+    const AUTHORIZATION_CODE = 'authorization_code';
+    const CLIENT_CREDENTIALS = 'client_credentials';
+    const IMPLICIT = 'implicit';
+    const PASSWORD = 'password';
+    const REFRESH_TOKEN = 'refresh_token';
 }

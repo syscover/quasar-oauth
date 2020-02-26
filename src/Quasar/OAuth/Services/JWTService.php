@@ -7,6 +7,7 @@ use Quasar\OAuth\Services\AccessTokenService;
 use Quasar\OAuth\Services\RefreshTokenService;
 use Quasar\OAuth\Models\Client;
 use Quasar\OAuth\Models\RefreshToken;
+use Quasar\OAuth\Support\GrantType;
 
 class JWTService
 {
@@ -64,6 +65,7 @@ class JWTService
             'expiresAt'         => $refreshTokenDate->toDateTimeString()
         ]);
 
+        // Attention! we don't follow convention parameters, we use camel case
         return [
             'accessToken'   => $accessToken,
             'refreshToken'  => $refreshToken
@@ -71,9 +73,9 @@ class JWTService
     }
 
     /**
-     * Generate access token from refresh token
+     * Refresh access token with refresh token
      */
-    public static function generatePersonalAccessTokensWithRefreshToken(
+    public static function refreshPersonalAccessTokens(
         string $refreshToken, 
         string $grantType
     )
@@ -103,9 +105,7 @@ class JWTService
     /**
      * Generate client credentials access token
      */
-    public static function generateClientCredentialsAccessTokens(
-        Client $client
-    )
+    public static function generateAccessToken(Client $client, string $grantType, string $userUuid = null, string $userType = null)
     {
         // get current times
         $accessTokenDate    = Carbon::now();
@@ -117,11 +117,20 @@ class JWTService
         $accessTokenPayload['iat']      = $accessTokenDate->format('U');
         $accessTokenPayload['nbf']      = $accessTokenDate->format('U');
         $accessTokenPayload['exp']      = $accessTokenDate->addSeconds(config('quasar-oauth.client_credentials_token_expiration'))->format('U');
+
+        // generate refresh token
+        $refreshTokenPayload['jit']     = (string) Str::uuid();
+        $refreshTokenPayload['iss']     = 'Quasar OAuth';
+        $refreshTokenPayload['iat']     = $refreshTokenDate->format('U');
+        $refreshTokenPayload['nbf']     = $refreshTokenDate->format('U');
+        $refreshTokenPayload['exp']     = $refreshTokenDate->addSeconds(config('quasar-oauth.personal_refresh_token_expiration'))->format('U');
         
         // generate token
-        $accessToken = self::encode($accessTokenPayload, $client->secret);
+        $accessToken    = self::encode($accessTokenPayload, $client->secret);
+        $refreshToken   = self::encode($refreshTokenPayload, $client->secret);
 
-        $accessTokenService = new AccessTokenService();
+        $accessTokenService     = new AccessTokenService();
+        $refreshTokenService    = new RefreshTokenService();
 
         // register token
         $accessTokenService->create([
@@ -133,9 +142,51 @@ class JWTService
             'expiresAt'     => $accessTokenDate->toDateTimeString()
         ]);
 
+        $refreshTokenService->create([
+            'uuid'              => $refreshTokenPayload['jit'],
+            'accessTokenUuid'   => $accessTokenPayload['jit'],
+            'token'             => $refreshToken,
+            'isRevoked'         => false,
+            'expiresAt'         => $refreshTokenDate->toDateTimeString()
+        ]);
+
         return [
-            'accessToken'   => $accessToken
+            'token_type'    => 'bearer',
+            'access_token'  => $accessToken,
+            'refresh_token' => $refreshToken,
+            'expires_in'    => config('quasar-oauth.client_credentials_token_expiration'),
+            'scope'         => '*'
         ];
+    }
+
+    /**
+     * Refresh access token with refresh token
+     */
+    public static function refreshAccessTokens(
+        string $refreshToken, 
+        string $grantType
+    )
+    {
+        // get refresh token without sign
+        $refreshTokenArr = (array) self::decode($refreshToken);
+
+        // get refresh token from uuid
+        $refreshTokenObj = RefreshToken::where('uuid', $refreshTokenArr['jit'])->first();
+
+        // get access token
+        $accessToken = $refreshTokenObj->accessToken;
+
+        // decode refresh token with sign
+        self::decode($refreshToken, $accessToken->client->secret);
+        
+        // delete old access token and refresh token by foreign key
+        $accessToken->delete();
+
+        return self::generatePersonalAccessTokens(
+            $accessToken->userUuid, 
+            $accessToken->userType,
+            $accessToken->client
+        );
     }
 
     public static function encode(array $payload, string $secret)
