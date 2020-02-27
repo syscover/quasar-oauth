@@ -13,7 +13,7 @@ class JWTService
     /**
      * Generate client credentials access token
      */
-    public static function generateAccessToken(Client $client, string $userType = null , string $userUuid = null)
+    public static function generateAccessToken(Client $client, string $userType = null, string $userUuid = null)
     {
         // defined tokens
         $accessToken    = null;

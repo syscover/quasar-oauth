@@ -10,7 +10,7 @@ class AccessTokenService extends CoreService
     {
         $this->validate($data, [
             'uuid'          => 'required|uuid',
-            'clientUuid'    => 'required|uuid',
+            'clientUuid'    => 'required|uuid|exists:oauth_client,uuid',
             'token'         => 'required|string',
             'isRevoked'     => 'required|boolean',
             'name'          => 'required',

@@ -15,7 +15,10 @@ class PersonalAccessTokenService
         if ($application && Hash::check($secret, $application->secret))
         {
             // get first personal access client that is not revoked
-            $client = $application->clients->where('grant_type_uuid', '974a4a29-92b3-47c3-a282-f2b9058aa273')->where('is_revoke', false)->first();
+            $client = $application->clients
+                ->where('grant_type_uuid', '974a4a29-92b3-47c3-a282-f2b9058aa273')
+                ->where('is_revoke', false)
+                ->first();
 
             // validate username and password
             $entity = self::validateUser($username, $password, $client->model);

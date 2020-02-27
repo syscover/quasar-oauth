@@ -1,6 +1,7 @@
 <?php namespace Quasar\OAuth\GraphQL\Middlewares;
 
 use Closure;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Quasar\OAuth\Services\JWTService;
@@ -31,10 +32,20 @@ class Authorization
             
             if (!isset($token['jit'])) throw new JWTRejectedException();
             
-            $accessToken = AccessToken::where('uuid', $token['jit'])->first();
+            // get access token from database
+            $accessToken = AccessToken::where('uuid', $token['jit'])
+                ->where('is_revoked', false)
+                ->first();
 
+            // check access token client and client secret
             if (!$accessToken || !$accessToken->client || !$accessToken->client->secret) throw new JWTRejectedException();
 
+            // check if access token has expired
+            if ($accessToken->expiresAt)
+            {
+                if (Carbon::parse($accessToken->expiresAt) < now()) throw new JWTRejectedException();
+            }
+            
             // try decode token with sign
             JWTService::decode($request->bearerToken(), $accessToken->client->secret);
         }

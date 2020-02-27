@@ -8,12 +8,12 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-        <title>Hello, world!</title>
+        <title>Quasar</title>
     </head>
     <body>
 
         <div class="d-flex align-items-center justify-content-center">
-            <div class="card mb-3 w-50">
+            <div class="card w-50">
                 <div class="row no-gutters">
                     <div class="col-md-4">
                         <img src="https://www.myemdesigns.com/uploads/images/Imagen_o_foto_de_animal_digital.jpg" class="card-img">

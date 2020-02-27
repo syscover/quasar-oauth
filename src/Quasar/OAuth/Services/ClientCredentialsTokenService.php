@@ -6,11 +6,10 @@ use Quasar\OAuth\Exceptions\AuthenticationException;
 
 class ClientCredentialsTokenService
 {
-    public static function getToken(string $clientUuid, string $clientSecret, string $code, string $redirectUri)
+    public static function getToken(string $clientUuid, string $clientSecret)
     {
         $client = Client::where('uuid', $clientUuid)
                 ->where('secret', $clientSecret)
-                ->where('redirect', $redirectUri)
                 ->where('is_revoked', false)
                 ->first();
 
