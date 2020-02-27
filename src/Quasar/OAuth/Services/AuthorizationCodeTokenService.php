@@ -4,13 +4,12 @@ use Quasar\OAuth\Services\JWTService;
 use Quasar\OAuth\Models\Client;
 use Quasar\OAuth\Exceptions\AuthenticationException;
 
-class ClientCredentialsTokenService
+class AuthorizationCodeTokenService
 {
-    public static function getToken(string $clientUuid, string $clientSecret, string $code, string $redirectUri)
+    public static function getToken(string $clientUuid, string $clientSecret)
     {
         $client = Client::where('uuid', $clientUuid)
                 ->where('secret', $clientSecret)
-                ->where('redirect', $redirectUri)
                 ->where('is_revoked', false)
                 ->first();
 

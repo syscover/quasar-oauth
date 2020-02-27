@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Quasar\Core\Traits\ApiRestResponse;
 use Quasar\OAuth\Models\Client;
 use Quasar\OAuth\Services\ClientCredentialsTokenService;
+use Quasar\OAuth\Services\AuthorizationCodeTokenService;
 use Quasar\OAuth\Support\GrantType;
 use Quasar\OAuth\Exceptions\AuthenticationException;
 
@@ -19,17 +20,9 @@ class CredentialsController extends BaseController
 
         if ($grantType === GrantType::AUTHORIZATION_CODE)
         {
-            // check code
-            $client = Client::where('uuid', $request->input('client_id'))
-                ->where('client_secret', $request->input('client_id'))
-                ->where('is_revoked', false)
-                ->first();
+            $data = AuthorizationCodeTokenService::getToken($request->input('client_id'), $request->input('client_secret'), $request->input('code'), $request->input('redirect_uri'));
 
-            if ($client)
-            {
-                
-            }
-
+            return $this->successResponse($data);
         }
         
         if ($grantType === GrantType::CLIENT_CREDENTIALS)
@@ -58,8 +51,6 @@ class CredentialsController extends BaseController
             ->first();
 
         $request->input('response_type'); // code
-        
-       // dd($request->all());
 
         if ($client)
         {
