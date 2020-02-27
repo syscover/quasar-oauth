@@ -25,11 +25,13 @@ input OAuthClientInput
     id: Int
     uuid: ID
     applicationUuid: ID!
-    typeUuid: ID!
+    grantTypeUuid: ID!
     name: String!
     secret: String
     model: String
     redirect: String!
+    expiredAccessToken: Int
+    expiredRefreshToken: Int
     isRevoked: Boolean!
     isMaster: Boolean
 }

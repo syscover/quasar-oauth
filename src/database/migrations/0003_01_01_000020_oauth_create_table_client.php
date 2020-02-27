@@ -20,17 +20,19 @@ class OauthCreateTableClient extends Migration
                 $table->increments('id');
                 $table->uuid('uuid');
                 $table->uuid('application_uuid');
-                $table->uuid('type_uuid');
+                $table->uuid('grant_type_uuid');
                 $table->string('name');
                 $table->string('secret', 100);
                 $table->string('model')->nullable();
-                $table->text('redirect');
+                $table->text('redirect')->nullable();
+                $table->integer('expired_access_token')->unsigned()->nullable();
+                $table->integer('expired_refresh_token')->unsigned()->nullable();
                 $table->boolean('is_revoked')->default(false);
                 $table->boolean('is_master')->default(false);
                 $table->timestamps();
 
                 $table->index('uuid', 'oauth_client_uuid_idx');
-                $table->index('type_uuid', 'oauth_client_type_uuid_idx');
+                $table->index('grant_type_uuid', 'oauth_client_grant_type_uuid_idx');
                 $table->foreign('application_uuid', 'oauth_client_application_uuid_fk')
                     ->references('uuid')
                     ->on('oauth_application')

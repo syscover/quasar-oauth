@@ -15,14 +15,14 @@ class PersonalAccessTokenService
         if ($application && Hash::check($secret, $application->secret))
         {
             // get first personal access client that is not revoked
-            $personalAccessClient = $application->clients->where('type_uuid', '974a4a29-92b3-47c3-a282-f2b9058aa273')->where('is_revoke', false)->first();
+            $client = $application->clients->where('grant_type_uuid', '974a4a29-92b3-47c3-a282-f2b9058aa273')->where('is_revoke', false)->first();
 
             // validate username and password
-            $entity = self::validateUser($username, $password, $personalAccessClient->model);
+            $entity = self::validateUser($username, $password, $client->model);
 
-            if ($entity && $personalAccessClient)
+            if ($entity && $client)
             {
-                return JWTService::generatePersonalAccessTokens($entity->uuid, $personalAccessClient->model, $personalAccessClient);
+                return JWTService::generateAccessToken($client, $client->model, $entity->uuid);
             }
         }
 

@@ -31,21 +31,27 @@ type OAuthClient
     uuid: ID!
     applicationUuid: ID!
     application: OAuthApplication!
-    typeUuid: ID!
+    grantTypeUuid: ID!
     name: String!
     secret: String!
     model: String
     redirect: String!
+    expiredAccessToken: Int
+    expiredRefreshToken: Int
     isRevoked: Boolean!
     isMaster: Boolean!
     createdAt: DateTime
     updatedAt: DateTime
 }
 
+# use underscore by OAuth2 conventions
 type OAuthCredentials
 {
-    accessToken: String!
-    refreshToken: String!
+    token_type: String!
+    access_token: String!
+    refresh_token: String
+    expires_in: Int
+    scope: String
 }
 
 type OAuthUser

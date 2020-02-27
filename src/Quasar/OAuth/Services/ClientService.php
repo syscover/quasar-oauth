@@ -10,14 +10,16 @@ class ClientService extends CoreService
     public function create(array $data)
     {
         $this->validate($data, [
-            'uuid'              => 'nullable|uuid',
-            'applicationUuid'   => 'required|uuid',
-            'typeUuid'          => 'required|uuid',
-            'name'              => 'required|string',
-            'model'             => 'nullable|string',
-            'redirect'          => 'required|string',
-            'isRevoked'         => 'required|boolean',
-            'isMaster'          => 'boolean'
+            'uuid'                  => 'nullable|uuid',
+            'applicationUuid'       => 'required|uuid',
+            'grantTypeUuid'         => 'required|uuid',
+            'name'                  => 'required|string',
+            'model'                 => 'nullable|string',
+            'redirect'              => 'required|string',
+            'expiredAccessToken'    => 'nullable|integer',
+            'expiredRefreshToken'   => 'nullable|integer',
+            'isRevoked'             => 'required|boolean',
+            'isMaster'              => 'boolean'
         ]);
 
         // set secret
@@ -35,14 +37,16 @@ class ClientService extends CoreService
         Arr::forget($data, 'isMaster');
 
         $this->validate($data, [
-            'id'                => 'required|integer',
-            'uuid'              => 'required|uuid',
-            'applicationUuid'   => 'required|uuid',
-            'typeUuid'          => 'required|uuid',
-            'name'              => 'required|string',
-            'model'             => 'nullable|string',
-            'redirect'          => 'required|string',
-            'isRevoked'         => 'required|boolean'
+            'id'                    => 'required|integer',
+            'uuid'                  => 'required|uuid',
+            'applicationUuid'       => 'required|uuid',
+            'grantTypeUuid'         => 'required|uuid',
+            'name'                  => 'required|string',
+            'model'                 => 'nullable|string',
+            'redirect'              => 'required|string',
+            'expiredAccessToken'    => 'nullable|integer',
+            'expiredRefreshToken'   => 'nullable|integer',
+            'isRevoked'             => 'required|boolean'
         ]);
 
         $object = Client::where('uuid', $uuid)->first();

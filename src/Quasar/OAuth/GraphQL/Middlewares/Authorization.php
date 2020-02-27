@@ -9,8 +9,8 @@ use Quasar\OAuth\Exceptions\JWTRejectedException;
 
 class Authorization
 {
-    private $mutationOAuthCredentials           = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){accessTokenrefreshToken__typename}}';
-    private $mutationOAuthRefreshCredentials    = 'mutationOAuthRefreshCredentials($credentials:OAuthRefreshCredentialsInput!){oAuthRefreshCredentials(credentials:$credentials){accessTokenrefreshToken__typename}}';
+    private $mutationOAuthCredentials           = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
+    private $mutationOAuthRefreshCredentials    = 'mutationOAuthRefreshCredentials($credentials:OAuthRefreshCredentialsInput!){oAuthRefreshCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
 
     /**
      * Force the Accept header of the request.
