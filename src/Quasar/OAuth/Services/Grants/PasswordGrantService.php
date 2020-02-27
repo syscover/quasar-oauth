@@ -1,11 +1,12 @@
-<?php namespace Quasar\OAuth\Services;
+<?php namespace Quasar\OAuth\Services\Grants;
 
 use Illuminate\Support\Facades\Hash;
 use Quasar\OAuth\Models\Application;
-use Quasar\OAuth\Services\JWTService;
 use Quasar\OAuth\Exceptions\AuthenticationException;
+use Quasar\OAuth\Services\JWTService;
+use Quasar\OAuth\Services\AccessTokenService;
 
-class PersonalAccessTokenService
+class PasswordGrantService
 {
     public static function getToken(string $code, string $secret, string $username, string $password)
     {
@@ -16,7 +17,7 @@ class PersonalAccessTokenService
         {
             // get first personal access client that is not revoked
             $client = $application->clients
-                ->where('grant_type_uuid', '974a4a29-92b3-47c3-a282-f2b9058aa273')
+                ->where('grant_type_uuid', 'a48e6aa0-2e9a-492d-b63b-d5b6223e74e2')
                 ->where('is_revoke', false)
                 ->first();
 
@@ -39,5 +40,19 @@ class PersonalAccessTokenService
         if ($entity && Hash::check($password, $entity->password)) return $entity;
 
         return null;
+    }
+
+    public static function me(string $bearerToken)
+    {
+        $accessTokenObj = AccessTokenService::getAccessTokenObject($bearerToken);
+        
+        return $accessTokenObj->user;
+    }
+
+    public static function permissions(string $bearerToken)
+    {
+        $accessTokenObj = AccessTokenService::getAccessTokenObject($bearerToken);
+
+       return $accessTokenObj->user->permissions;
     }
 }

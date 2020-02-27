@@ -26,6 +26,7 @@ class OauthCreateTableAuthorizationCode extends Migration
                 $table->timestamps();
 
                 $table->index('uuid', 'oauth_authorization_code_uuid_idx');
+                $table->index('code', 'oauth_authorization_code_code_idx');
                 $table->foreign('client_uuid', 'oauth_authorization_code_client_uuid_fk')
                     ->references('uuid')
                     ->on('oauth_client')

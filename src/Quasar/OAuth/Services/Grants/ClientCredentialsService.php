@@ -1,10 +1,10 @@
-<?php namespace Quasar\OAuth\Services;
+<?php namespace Quasar\OAuth\Services\Grants;
 
 use Quasar\OAuth\Services\JWTService;
 use Quasar\OAuth\Models\Client;
 use Quasar\OAuth\Exceptions\AuthenticationException;
 
-class ClientCredentialsTokenService
+class ClientCredentialsService
 {
     public static function getToken(string $clientUuid, string $clientSecret)
     {

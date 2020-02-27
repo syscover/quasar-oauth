@@ -38,15 +38,12 @@ input OAuthClientInput
 
 input OAuthCredentialsInput
 {
+    grantType: GrantType!
     username: String
     password: String
-    clientUuid: String
+    clientId: ID
     clientSecret: String
-    grantType: GrantType!
-}
-
-input OAuthRefreshCredentialsInput
-{
-    refreshToken: String!
-    grantType: GrantType!
+    code: ID
+    redirectUri: String
+    refreshToken: String
 }

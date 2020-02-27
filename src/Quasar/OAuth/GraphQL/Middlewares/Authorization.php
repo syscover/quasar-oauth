@@ -4,14 +4,19 @@ use Closure;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
+use Quasar\OAuth\Exceptions\AccessTokenExpiredException;
+use Quasar\OAuth\Exceptions\AccessTokenNotFoundException;
+use Quasar\OAuth\Exceptions\BearerTokenNotFoundException;
+use Quasar\OAuth\Exceptions\ClientNotFoundException;
+use Quasar\OAuth\Exceptions\JWTRejectedException;
+use Quasar\OAuth\Exceptions\SecretNotFoundException;
 use Quasar\OAuth\Services\JWTService;
 use Quasar\OAuth\Models\AccessToken;
-use Quasar\OAuth\Exceptions\JWTRejectedException;
 
 class Authorization
 {
     private $mutationOAuthCredentials           = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
-    private $mutationOAuthRefreshCredentials    = 'mutationOAuthRefreshCredentials($credentials:OAuthRefreshCredentialsInput!){oAuthRefreshCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
+    private $mutationOAuthRefreshCredentials    = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
 
     /**
      * Force the Accept header of the request.
@@ -26,7 +31,8 @@ class Authorization
             preg_replace( "/\s+|\r|\n/", "", $request['query']) !== $this->mutationOAuthRefreshCredentials
         )
         {
-            if (!$request->bearerToken()) throw new JWTRejectedException();
+            info(preg_replace( "/\s+|\r|\n/", "", $request['query']));
+            if (!$request->bearerToken()) throw new BearerTokenNotFoundException();
 
             $token = (array) JWTService::decode($request->bearerToken());
             
@@ -38,12 +44,14 @@ class Authorization
                 ->first();
 
             // check access token client and client secret
-            if (!$accessToken || !$accessToken->client || !$accessToken->client->secret) throw new JWTRejectedException();
+            if (!$accessToken) throw new AccessTokenNotFoundException();
+            if (!$accessToken->client) throw new ClientNotFoundException();
+            if (!$accessToken->client->secret) throw new SecretNotFoundException();
 
             // check if access token has expired
             if ($accessToken->expiresAt)
             {
-                if (Carbon::parse($accessToken->expiresAt) < now()) throw new JWTRejectedException();
+                if (Carbon::parse($accessToken->expiresAt) < now()) throw new AccessTokenExpiredException();
             }
             
             // try decode token with sign

@@ -1,5 +1,6 @@
 <?php namespace Quasar\OAuth\Services;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Quasar\Core\Services\CoreService;
 use Quasar\OAuth\Models\AccessToken;
@@ -20,6 +21,9 @@ class AccessTokenService extends CoreService
         ]);
 
         $object = AccessToken::create($data)->fresh();
+
+        // clean older tokens
+        self::clean();
 
         return $object;
     }
@@ -63,5 +67,21 @@ class AccessTokenService extends CoreService
         }
 
         return $accessTokenObj;
+    }
+
+    /**
+     * Delete all access token with a month expired without refresh tokens
+     * Delete all access token with refresh token with a month expired
+     */
+    private static function clean()
+    {
+        AccessToken::where('expires_at', '<', now()->subMonth())
+            ->doesntHave('refreshTokens')
+            ->delete();
+
+        AccessToken::whereHas('refreshTokens', function (Builder $query) {
+                $query->where('expires_at', '<', now()->subMonth());
+            })
+            ->delete();
     }
 }

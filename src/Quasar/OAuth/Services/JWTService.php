@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Firebase\JWT\JWT;
 use Carbon\Carbon;
+use Quasar\OAuth\Exceptions\RefreshTokenExpiredException;
 use Quasar\OAuth\Services\AccessTokenService;
 use Quasar\OAuth\Services\RefreshTokenService;
 use Quasar\OAuth\Models\Client;
@@ -93,6 +94,9 @@ class JWTService
 
         // get access token
         $accessToken = $refreshTokenObj->accessToken;
+
+        // check that refresh token isn't expired
+        if (Carbon::parse($refreshTokenObj->expiresAt) < now()) throw new RefreshTokenExpiredException();
 
         // decode refresh token with sign
         self::decode($refreshToken, $accessToken->client->secret);

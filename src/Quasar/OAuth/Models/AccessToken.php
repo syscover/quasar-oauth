@@ -22,4 +22,9 @@ class AccessToken extends CoreModel
     {
         return $this->morphTo('user', 'user_type', 'user_uuid', 'uuid');
     }
+
+    public function refreshTokens()
+    {
+        return $this->hasMany(RefreshToken::class, 'access_token_uuid', 'uuid');
+    }
 }
