@@ -25,7 +25,7 @@
                             
                             <div class="buttons">
                                 <!-- Authorize Button -->
-                                <form method="post" action="{{ $client->redirect }}">
+                                <form method="post" action="{{ $client->redirect }}?code={{ $code }}&state={{ $request->state }}">
                                     @csrf
 
                                     <input type="hidden" name="state" value="{{ $request->state }}">
@@ -40,7 +40,7 @@
                                     @method('DELETE')
 
                                     <input type="hidden" name="state" value="{{ $request->state }}">
-                                    <input type="hidden" name="client_id" value="{{ $client->id }}">
+                                    <input type="hidden" name="client_id" value="{{ $client->uuid }}">
                                     <input type="hidden" name="code" value="{{ $code }}">
                                     <button class="btn btn-danger">Cancel</button>
                                 </form>
