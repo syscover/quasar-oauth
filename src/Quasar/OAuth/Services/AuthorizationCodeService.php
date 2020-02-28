@@ -1,9 +1,10 @@
 <?php namespace Quasar\OAuth\Services;
 
 use Illuminate\Support\Str;
+use Quasar\Core\Services\CoreService;
 use Quasar\OAuth\Models\AuthorizationCode;
 
-class AuthorizationCodeService
+class AuthorizationCodeService extends CoreService
 {
     public function create(array $data)
     {
@@ -49,11 +50,12 @@ class AuthorizationCodeService
 
     public static function getCode(string $clientUuid)
     {
-        $authorizationCode = self::create([
+        $authorizationCode = (new AuthorizationCodeService)->create([
             'clientUuid'    => $clientUuid,
-            'expiresAt'     => now()->addMinutes(5) // all authorization codes has 5 minutes expiration
+            'isRevoked'     => false,
+            'expiresAt'     => now()->addMinutes(5)->format('Y-m-d H:i:s') // all authorization codes has 5 minutes expiration
         ]);
-
+            
         return $authorizationCode->code;
     }
 

@@ -7,6 +7,7 @@ use Quasar\OAuth\Services\Grants\AuthorizationCodeService;
 use Quasar\OAuth\Services\Grants\ClientCredentialsService;
 use Quasar\OAuth\Services\Grants\PasswordGrantService;
 use Quasar\OAuth\Services\Grants\RefreshTokenService;
+use Quasar\OAuth\Services\AuthorizationCodeService as CodeService;
 use Quasar\OAuth\Support\GrantType;
 use Quasar\OAuth\Exceptions\AuthenticationException;
 
@@ -65,7 +66,7 @@ class CredentialsController extends BaseController
                 return view('oauth::pages.authorize', [
                     'client'    => $client,
                     'scopes'    => [],
-                    'code'      => AuthorizationCodeService::getCode($client->uuid),
+                    'code'      => CodeService::getCode($client->uuid),
                     'request'   => $request
                 ]);
             }

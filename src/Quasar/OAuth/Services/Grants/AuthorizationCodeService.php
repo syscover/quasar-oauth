@@ -14,7 +14,7 @@ class AuthorizationCodeService
                 ->where('redirect', $redirect)
                 ->where('is_revoked', false)
                 ->where('grant_type_uuid', 'd05ab246-28d5-4248-92ee-6e37b9a02f46')
-                ->whereHas('authorizationCodes', function (Builder $query) {
+                ->whereHas('authorizationCodes', function (Builder $query) use ($code) {
                     $query->where('is_revoked', false)
                         ->where('expires_at', '>', now())
                         ->where('code', $code);
