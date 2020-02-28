@@ -32,7 +32,7 @@ class OauthCreateTableAccessToken extends Migration
                 $table->foreign('client_uuid', 'oauth_access_token_client_uuid_fk')
                     ->references('uuid')
                     ->on('oauth_client')
-                    ->onDelete('restrict')
+                    ->onDelete('cascade')
                     ->onUpdate('cascade');
 			});
 		}
