@@ -28,7 +28,7 @@ class RestHook
 
                 // deactivate subscription
                 $subscription->isActive = false;
-                $subscriptions->update();
+                $subscription->update();
             }
         }
 
