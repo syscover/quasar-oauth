@@ -10,7 +10,7 @@ class RestHook
     public static function fire($event, $data)
     {
         $client = new Client;
-        $subscriptions = RestHookModel::where('event', $event)->get();
+        $subscriptions = RestHookModel::where('event', $event)->where('is_active', true)->get();
         $response = [];
 
         foreach($subscriptions as $subscription)
@@ -25,6 +25,10 @@ class RestHook
             {
                 info($e->getMessage());
                 info($e->getCode());
+
+                // deactivate subscription
+                $subscription->isActive = false;
+                $subscriptions->update();
             }
         }
 
