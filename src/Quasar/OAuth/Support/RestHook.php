@@ -21,9 +21,10 @@ class RestHook
                     'json' => $data
                 ]);
             } 
-            catch (Exception $e) 
+            catch (\Exception $e) 
             {
                 info($e->getMessage());
+                info($e->getCode());
             }
         }
 

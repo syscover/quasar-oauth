@@ -10,7 +10,7 @@ use Quasar\Core\Models\CoreModel;
 class RestHook extends CoreModel
 {
     protected $table        = 'oauth_rest_hook';
-    protected $fillable     = ['uuid', 'clientUuid', 'url', 'event'];
+    protected $fillable     = ['uuid', 'clientUuid', 'url', 'event', 'isActive'];
     public $with            = ['client'];
 
     public function client()

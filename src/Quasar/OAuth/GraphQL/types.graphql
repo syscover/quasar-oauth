@@ -61,6 +61,7 @@ type OAuthRestHook
     clientUuid: ID
     url: String!
     event: String!
+    isActive: Boolean!
     createdAt: DateTime
     updatedAt: DateTime
 }

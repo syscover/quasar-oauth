@@ -11,7 +11,8 @@ class RestHookService extends CoreService
             'uuid'          => 'nullable|uuid',
             'clientUuid'    => 'nullable|uuid|exists:oauth_client,uuid',
             'url'           => 'required|string',
-            'event'         => 'required|string'
+            'event'         => 'required|string',
+            'isActive'      => 'nullable|boolean'
         ]);
 
         $object = RestHook::create($data)->fresh();
@@ -26,7 +27,8 @@ class RestHookService extends CoreService
             'uuid'          => 'required|uuid',
             'clientUuid'    => 'nullable|uuid|exists:oauth_client,uuid',
             'url'           => 'required|string',
-            'event'         => 'required|string'
+            'event'         => 'required|string',
+            'isActive'      => 'nullable|boolean'
         ]);
 
         $object = RestHook::where('uuid', $uuid)->first();

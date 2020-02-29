@@ -55,4 +55,5 @@ input OAuthRestHookInput
     clientUuid: ID
     url: String!
     event: String!
+    isActive: Boolean
 }

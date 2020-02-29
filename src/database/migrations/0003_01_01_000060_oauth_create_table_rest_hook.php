@@ -22,6 +22,7 @@ class OAuthCreateTableRestHook extends Migration {
                 $table->uuid('client_uuid')->nullable();
                 $table->string('url');
                 $table->string('event');
+                $table->boolean('is_active')->default(true);
 
                 $table->timestamps();
                 $table->softDeletes();
