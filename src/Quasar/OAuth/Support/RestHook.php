@@ -23,8 +23,7 @@ class RestHook
             } 
             catch (\Exception $e) 
             {
-                info($e->getMessage());
-                info($e->getCode());
+                info($e->getCode() . ' - ' . $e->getMessage());
 
                 // deactivate subscription
                 $subscription->isActive = false;
