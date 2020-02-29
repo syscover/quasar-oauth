@@ -1,6 +1,7 @@
 <?php namespace Quasar\OAuth;
 
 use Illuminate\Support\ServiceProvider;
+use Quasar\OAuth\Events\OAuthEventServiceProvider;
 
 class OAuthServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,9 @@ class OAuthServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../config/quasar-oauth.php' => config_path('quasar-oauth.php')
         ], 'config');
+
+        // register events and listener predefined
+        $this->app->register(OAuthEventServiceProvider::class);
 	}
 
 	/**

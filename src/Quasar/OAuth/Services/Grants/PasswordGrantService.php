@@ -5,6 +5,7 @@ use Quasar\OAuth\Models\Application;
 use Quasar\OAuth\Exceptions\AuthenticationException;
 use Quasar\OAuth\Services\JWTService;
 use Quasar\OAuth\Services\AccessTokenService;
+use Quasar\OAuth\Events\LoginSuccessful;
 
 class PasswordGrantService
 {
@@ -26,6 +27,7 @@ class PasswordGrantService
 
             if ($entity && $client)
             {
+                event(new LoginSuccessful($entity));
                 return JWTService::generateAccessToken($client, $client->model, $entity->uuid);
             }
         }

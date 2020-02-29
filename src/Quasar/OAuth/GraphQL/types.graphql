@@ -54,6 +54,17 @@ type OAuthCredentials
     scope: String
 }
 
+type OAuthRestHook
+{
+    id: Int!
+    uuid: ID!
+    clientUuid: ID
+    url: String!
+    event: String!
+    createdAt: DateTime
+    updatedAt: DateTime
+}
+
 type OAuthUser
 {
     username: String!

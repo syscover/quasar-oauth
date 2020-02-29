@@ -15,3 +15,8 @@ oAuthDeleteClient(uuid:ID!): [OAuthClient] @field(resolver: "Quasar\\OAuth\\Grap
 
 # Credentials
 oAuthCredentials(credentials: OAuthCredentialsInput!): OAuthCredentials! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\CredentialsResolver@credentials")
+
+# Rest Hook
+oAuthCreateRestHook(payload:OAuthRestHookInput!): OAuthRestHook @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\RestHookResolver@create")
+oAuthUpdateRestHook(payload:OAuthRestHookInput!): OAuthRestHook @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\RestHookResolver@update")
+oAuthDeleteRestHook(uuid:ID!): [OAuthRestHook] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\RestHookResolver@delete")

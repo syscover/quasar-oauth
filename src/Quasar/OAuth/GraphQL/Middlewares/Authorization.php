@@ -16,7 +16,6 @@ use Quasar\OAuth\Models\AccessToken;
 class Authorization
 {
     private $mutationOAuthCredentials           = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
-    private $mutationOAuthRefreshCredentials    = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
 
     /**
      * Force the Accept header of the request.
@@ -26,12 +25,8 @@ class Authorization
      */
     public function handle(Request $request, Closure $next)
     {
-        if (
-            preg_replace( "/\s+|\r|\n/", "", $request['query']) !== $this->mutationOAuthCredentials && 
-            preg_replace( "/\s+|\r|\n/", "", $request['query']) !== $this->mutationOAuthRefreshCredentials
-        )
+        if (preg_replace( "/\s+|\r|\n/", "", $request['query']) !== $this->mutationOAuthCredentials)
         {
-            info(preg_replace( "/\s+|\r|\n/", "", $request['query']));
             if (!$request->bearerToken()) throw new BearerTokenNotFoundException();
 
             $token = (array) JWTService::decode($request->bearerToken());

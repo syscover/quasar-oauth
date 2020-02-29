@@ -11,7 +11,7 @@ class RestHook extends CoreModel
 {
     protected $table        = 'oauth_rest_hook';
     protected $fillable     = ['uuid', 'clientUuid', 'url', 'event'];
-    public $with            = ['client', 'user'];
+    public $with            = ['client'];
 
     public function client()
     {

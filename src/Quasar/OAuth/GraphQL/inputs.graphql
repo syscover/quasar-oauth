@@ -47,3 +47,12 @@ input OAuthCredentialsInput
     redirectUri: String
     refreshToken: String
 }
+
+input OAuthRestHookInput
+{
+    id: Int
+    uuid: ID
+    clientUuid: ID
+    url: String!
+    event: String!
+}

@@ -33,8 +33,7 @@ class JWTService
 
         // generate token
         $accessToken            = self::encode($accessTokenPayload, $client->secret);
-        $accessTokenService     = new AccessTokenService();
-        $accessTokenService->create([
+        (new AccessTokenService)->create([
             'uuid'          => $accessTokenPayload['jit'],
             'clientUuid'    => $client->uuid,
             'token'         => $accessToken,
@@ -60,8 +59,7 @@ class JWTService
 
             // generate token
             $refreshToken           = self::encode($refreshTokenPayload, $client->secret);
-            $refreshTokenService    = new RefreshTokenService();
-            $refreshTokenService->create([
+            (new RefreshTokenService)->create([
                 'uuid'              => $refreshTokenPayload['jit'],
                 'accessTokenUuid'   => $accessTokenPayload['jit'],
                 'token'             => $refreshToken,

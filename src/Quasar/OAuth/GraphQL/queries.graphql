@@ -16,3 +16,8 @@ oAuthMePermissions: [JSON] @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\
 oAuthClient(query:[QueryStatementInput]): OAuthClient @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@find")
 oAuthClients(query:[QueryStatementInput]): [OAuthClient!]! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@get")
 oAuthClientsPagination(query:[QueryStatementInput]): Pagination! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\ClientResolver@paginate")
+
+# RestHook
+oAuthRestHook(query:[QueryStatementInput]): OAuthRestHook @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\RestHookResolver@find")
+oAuthRestHooks(query:[QueryStatementInput]): [OAuthRestHook!]! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\RestHookResolver@get")
+oAuthRestHooksPagination(query:[QueryStatementInput]): Pagination! @field(resolver: "Quasar\\OAuth\\GraphQL\\Resolvers\\RestHookResolver@paginate")

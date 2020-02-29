@@ -26,6 +26,10 @@ class OAuthPermissionSeeder extends Seeder
             ['uuid' => 'dffd734f-b711-45c3-abc5-b432c372de6a',  'name' => 'admin.oauth.refreshToken.list',                    'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'],
             ['uuid' => 'dc832da1-72e7-4bf4-b5b2-35698f3ebfa5',  'name' => 'admin.oauth.refreshToken.create',                  'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'],
             ['uuid' => 'c9797746-7b3d-4197-b78f-0d070e338a50',  'name' => 'admin.oauth.refreshToken.get',                     'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'], 
+            ['uuid' => '5fbbf529-7c6e-4d85-b6c1-57d30cd4eeb4',  'name' => 'admin.oauth.restHook.access',                      'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'],
+            ['uuid' => '254a1ee2-cdd4-45e7-b31a-88424acb09a6',  'name' => 'admin.oauth.restHook.list',                        'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'],
+            ['uuid' => 'e993b0de-ff5a-4cc9-84dc-1717e287361e',  'name' => 'admin.oauth.restHook.create',                      'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'],
+            ['uuid' => '2a074469-f200-474c-a81c-1237bb7a38b2',  'name' => 'admin.oauth.restHook.get',                         'package_uuid' => '786320e6-0e9e-41f8-b158-94a06b6494b2'], 
         ]);
     }
 }

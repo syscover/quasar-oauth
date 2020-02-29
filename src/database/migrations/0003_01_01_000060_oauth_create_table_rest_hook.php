@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AdminCreateTableRestHook extends Migration {
+class OAuthCreateTableRestHook extends Migration {
 
     /**
      * Run the migrations.
@@ -27,6 +27,7 @@ class AdminCreateTableRestHook extends Migration {
                 $table->softDeletes();
 
                 $table->index('uuid', 'oauth_rest_hook_uuid_idx');
+                $table->index('event', 'oauth_rest_hook_event_idx');
                 $table->foreign('client_uuid', 'oauth_rest_hook_client_uuid_fk')
                     ->references('uuid')
                     ->on('oauth_client')
