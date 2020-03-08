@@ -5,6 +5,8 @@ use GuzzleHttp\Client;
 
 class RestHook
 {
+    const ADMIN_LANG_CREATED = 'admin.lang.created';
+    const CMS_ARTICLE_CREATED = 'cms.article.created';
     const OAUTH_LOGIN_SUCCESSFUL = 'oauth.login.successful';
 
     public static function fire($event, $data)

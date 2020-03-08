@@ -1,7 +1,7 @@
 <?php namespace Quasar\OAuth\Listeners;
 
-use Quasar\OAuth\Events\LoginSuccessful;
 use Quasar\OAuth\Traits\RestHookable;
+use Quasar\OAuth\Events\LoginSuccessful;
 
 class LoginSuccessfulListener
 {
