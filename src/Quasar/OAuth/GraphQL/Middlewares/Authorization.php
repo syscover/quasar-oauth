@@ -15,7 +15,7 @@ use Quasar\OAuth\Models\AccessToken;
 
 class Authorization
 {
-    private $mutationOAuthCredentials           = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
+    private $mutationOAuthCredentials = 'mutationOAuthCredentials($credentials:OAuthCredentialsInput!){oAuthCredentials(credentials:$credentials){access_tokenrefresh_token__typename}}';
 
     /**
      * Force the Accept header of the request.
