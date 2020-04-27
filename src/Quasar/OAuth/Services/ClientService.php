@@ -15,7 +15,7 @@ class ClientService extends CoreService
             'grantTypeUuid'         => 'required|uuid',
             'name'                  => 'required|string',
             'model'                 => 'nullable|string',
-            'redirect'              => 'required|string',
+            'redirect'              => 'nullable|string',
             'expiredAccessToken'    => 'nullable|integer',
             'expiredRefreshToken'   => 'nullable|integer',
             'isRevoked'             => 'required|boolean',
